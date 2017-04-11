@@ -27,6 +27,17 @@ int main(int argc, char **argv)
     //Computing idfs
     printf("Computing idf for each term of each doc...\n");
     complete_idfs(doctab);
+    //Sorting wordtabs
+    printf("Sorting wordtabs according to tfidf...\n");
+    for (i = 0 ; i < ART_NUM ; i++)
+    {
+        sort_wordtab(doctab[i]);
+    }
+    for (i = 0 ; i < doctab[5].ndwords ; i++)
+    {
+        printf("%d: '%s' -> %f\n", i, doctab[5].wordtab[i].term,
+                doctab[5].wordtab[i].tf*doctab[5].wordtab[i].idf);
+    }
     return 0;
 }
 
@@ -165,4 +176,23 @@ float idf(char* term, struct Docs* doctab)
     }
     idfc = log(((float) ART_NUM)/(1. + (float) count));
     return idfc;
+}
+
+int tfidf_cmp(const void *p1, const void *p2)
+{
+    /* Arguments are pointers to pointers to Words */
+    float tfidf1, tfidf2;
+    struct Words w1, w2;
+    w1 = * (struct Words *) p1;
+    w2 = * (struct Words *) p2;
+    tfidf1 = w1.tf*w1.idf;
+    tfidf2 = w2.tf*w2.idf;
+    if (tfidf1 > tfidf2) return 1;
+    else if (tfidf1 == tfidf2) return 0;
+    else return -1;
+}
+
+void sort_wordtab(struct Docs doc)
+{
+    qsort(doc.wordtab, doc.ndwords, sizeof(struct Words), tfidf_cmp);
 }
