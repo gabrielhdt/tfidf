@@ -93,7 +93,7 @@ void create_wordtab(char** termtab, struct Docs* docptr)
     char** distinct_words;
     int nwords, i, wi = 0;
     struct Words* wordtab;
-    nwords = docptr->ndwords;
+    nwords = docptr->nwords;
     distinct_words = (char**) malloc(nwords*sizeof(char*));
     for (i = 0 ; i < nwords ; i++)
     {
