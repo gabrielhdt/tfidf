@@ -16,14 +16,14 @@ int main(int argc, char **argv)
         sprintf(docnametab[i], "%s/art%d.txt", ART_DIR, i);
     }
     doctab = (struct Docs*) malloc(ART_NUM*sizeof(struct Docs));
-    /*
     for (i = 0 ; i < ART_NUM ; i++)
     {
-        printf("Preparing doc %s...\n", docnametab[i]);
+        printf("Preparing doc %s...", docnametab[i]);
         doctab[i] = prepare_doc(docnametab[i]);
+        printf("with %d words and %d distinct words\n", doctab[i].nwords,
+               doctab[i].ndwords); 
     }
-    */
-    prepare_doc("articles/tfidf.txt");
+    //prepare_doc("articles/tfidf.txt");
     return 0;
 }
 
@@ -134,19 +134,20 @@ int tf(const char* term, char** termtab, int nwords)
     return count;
 }
 
-/*
-float idf(struct Words word, struct Docs* doctab)
+float idf(char* term, struct Docs* doctab)
 {
-    int i, count = 0;
+    int j, i, count = 0;
     float idfc;
     for (i = 0 ; i < ART_NUM ; i++)
     {
-        if (word.tf[i] >= 1)
+        for (j = 0 ; j < doctab[i].ndwords ; j++)
         {
-            count++;
+            if (strequal(term, doctab[i].wordtab[j].term))
+            {
+                count++;
+            }
         }
     }
     idfc = log(((float) ART_NUM)/(1. + (float) count));
     return idfc;
 }
-*/
