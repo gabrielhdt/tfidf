@@ -24,6 +24,9 @@ int main(int argc, char **argv)
                doctab[i].ndwords); 
     }
     //prepare_doc("articles/tfidf.txt");
+    //Computing idfs
+    printf("Computing idf for each term of each doc...\n");
+    complete_idfs(doctab);
     return 0;
 }
 
@@ -132,6 +135,18 @@ int tf(const char* term, char** termtab, int nwords)
         }
     }
     return count;
+}
+
+void complete_idfs(struct Docs* doctab)
+{
+    int i, j;
+    for (i = 0 ; i < ART_NUM ; i++)
+    {
+        for (j = 0 ; j < doctab[i].ndwords; j++)
+        {
+            doctab[i].wordtab[j].idf = idf(doctab[i].wordtab[j].term, doctab);
+        }
+    }
 }
 
 float idf(char* term, struct Docs* doctab)

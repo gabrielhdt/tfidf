@@ -23,6 +23,7 @@ int tf(const char* term, char** termtab, int nwords);
 float idf(char* term, struct Docs* doctab);
 void find_terms(char**, const char*, int);
 void create_wordtab(char**, struct Docs*);
+void complete_idfs(struct Docs* doctab);
 int str_in_strtab(char* str, char** strtab, int lentab);
 
 struct Words {
