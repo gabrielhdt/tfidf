@@ -10,15 +10,9 @@
 #define PUNCT ".,?;:!()\""
 #define TOSKIP " \n()\"^*"
 #define WORDSEP " \n"
-#define NUM_ELT(x) (sizeof(x)/sizeof(*(x)))
 
-int open_corpus(FILE **corpus);
+//main.c
 struct Docs prepare_doc(const char*);
-int wc(const char*);
-int is_punct(int);
-void rm_punct(char*);
-struct Words* strtab2words(char**, int);
-int strequal(const char*, const char*);
 int tf(const char* term, char** termtab, int nwords);
 float idf(char* term, struct Docs* doctab);
 void find_terms(char**, const char*, int);
@@ -26,7 +20,12 @@ void create_wordtab(char**, struct Docs*);
 void complete_idfs(struct Docs* doctab);
 int tfidf_cmp(const void *, const void *);
 void sort_wordtab(struct Docs doc);
+//utils.c
 int str_in_strtab(char* str, char** strtab, int lentab);
+int strequal(const char*, const char*);
+int wc(const char*);
+int is_punct(int);
+void rm_punct(char*);
 
 struct Words {
     char term[MAXWDLEN];
@@ -40,11 +39,4 @@ struct Docs {
     int nwords;
     int ndwords;  // Distinct words. More useful than nwords
 } doc;
-
-struct term_node
-{
-    char term[MAXWDLEN];
-    struct node *next;
-};
-
 #endif
