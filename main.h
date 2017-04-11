@@ -20,7 +20,7 @@ void rm_punct(char*);
 struct Words* strtab2words(char**, int);
 int strequal(const char*, const char*);
 int tf(const char* term, char** termtab, int nwords);
-float idf(struct Words, struct Docs* doctab);
+float idf(char* term, struct Docs* doctab);
 void find_terms(char**, const char*, int);
 void create_wordtab(char**, struct Docs*);
 int str_in_strtab(char* str, char** strtab, int lentab);
