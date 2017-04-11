@@ -51,8 +51,13 @@ struct Docs prepare_doc(const char* fname)
     find_terms(termtab, fname, nwords);
 
     //wordtab = (struct Words*) malloc(nwords*sizeof(struct Words));
-    printf("Completed wordtab.\n");
     create_wordtab(termtab, docptr);
+
+    //Setting term frequencies in doc
+    for (i = 0 ; i < doc.ndwords ; i++)
+    {
+        doc.wordtab[i].tf = tf(doc.wordtab[i].term, termtab, doc.nwords);
+    }
     return doc;
 }
 
@@ -107,11 +112,6 @@ void create_wordtab(char** termtab, struct Docs* docptr)
             wi++;
         }
     }
-    for (i = 0 ; i < wi ; i++)
-    {
-        printf("Word: %s\n", distinct_words[i]);
-    }
-    printf("With %d distinct words.\n", wi);
     docptr->ndwords = wi;
     wordtab = (struct Words*) malloc(wi*sizeof(struct Words));
     for (i = 0 ; i < wi ; i++)
@@ -131,7 +131,6 @@ int tf(const char* term, char** termtab, int nwords)
             count++;
         }
     }
-    printf("Frequency for %s: %d\n", term, count);
     return count;
 }
 
