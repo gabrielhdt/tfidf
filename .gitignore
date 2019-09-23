@@ -33,4 +33,4 @@
 *.su
 
 # Articles
-articles/
+articles/*.plain
